@@ -1,9 +1,12 @@
-import Navbar from './components/NavBar/Navbar';
+import ContactForm from './components/Contact';
+import './index.css'
+
+
 
 function App() {
   return (
     <div className="App">
-      <Navbar />
+      <ContactForm />
     </div>
   );
 }
