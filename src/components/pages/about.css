@@ -1,0 +1,10 @@
+.about {
+  margin: 10px;
+  /* background-color: aqua; */
+}
+.row1 h1{
+  text-align: center;
+  color: blue;
+  text-decoration-line: underline;
+  text-decoration-color: blue;
+}
