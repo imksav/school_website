@@ -8,3 +8,8 @@
   text-decoration-line: underline;
   text-decoration-color: blue;
 }
+.aboutus img{
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+}
