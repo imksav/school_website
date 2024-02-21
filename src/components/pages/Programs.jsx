@@ -1,9 +1,13 @@
 import React from "react";
-import avatar from '../../assets/imksav.png'
+import avatar from '../../assets/R.png'
+import { Head } from "../common/Head";
+import Navbar from "../common/Navbar";
 
 export const Programs = () => {
   return (
     <>
+      <Head />
+      <Navbar />
       <div className="row">
         <div className="title">
           <h3 style={{textAlign:"center"}}>Our Market Haunting Programs</h3>

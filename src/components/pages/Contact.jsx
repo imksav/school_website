@@ -1,8 +1,14 @@
 import React from "react";
 import arrow from "../../assets/Blue Right Arrow.png";
+import { Head } from "../common/Head";
+import Navbar from "../common/Navbar";
 
 export const ContactForm = () => {
   return (
+    <div>
+      <Head />
+      <Navbar />
+  
     <div>
       <div class="w-full">
         <section>
@@ -104,7 +110,8 @@ export const ContactForm = () => {
       <p class="text-center text-gray-500 text-xs">
         &copy;2024 imksav Corp. All rights reserved.
       </p>
-    </div>
+      </div>
+      </div>
   );
 };
 

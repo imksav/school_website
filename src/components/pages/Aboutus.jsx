@@ -1,9 +1,15 @@
 import React from "react";
 import '../pages/about.css'
-import aboutus from '../../assets/Blue Right Arrow.png'
+import { Head } from "../common/Head";
+import Navbar from "../common/Navbar";
 
 export const Aboutus = () => {
   return (
+    <div>
+      <Head  />
+      <Navbar  />
+
+
     <div className="about">
         <div className="row1">
         <h1>About Us</h1>
@@ -15,7 +21,8 @@ export const Aboutus = () => {
           <span>Our motto is  "Learn to Earn", which is meant for the all-around development of a child.</span>
           </p>
       </div>
-    </div>
+      </div>
+      </div>
   );
 };
 

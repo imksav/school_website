@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 export const Head = () => {
   return (
@@ -14,7 +15,11 @@ export const Head = () => {
                       <i className='fab fa-instagram icon'></i>
                       <i className='fab fa-twitter icon'></i>
                       <i className='fab fa-youtube icon'></i>
+                      <li class="nav-item">
+            <Link to="/admin">Log In</Link>
+          </li>
                  </ul>
+
             </div>
             
     </section>
