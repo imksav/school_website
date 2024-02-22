@@ -1,102 +1,46 @@
-import React from "react";
-import avatar from "../../assets/R.png";
+import React, { useEffect, useState } from "react";
 import { Head } from "../common/Head";
 import Navbar from "../common/Navbar";
+import axios from "axios";
 
-export const Blogs = () => {
+export const Blogs = ({ blogs }) => {
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      try {
+        const response = await axios.get(
+          "http://127.0.0.1:8000/api/display-blogs"
+        );
+        console.log(response);
+        setData(response.data);
+      } catch (error) {
+        console.error("Error fetching blogs:", error);
+      }
+    };
+    fetchBlogs();
+  }, [blogs]);
   return (
     <>
-     
-      <Head  />
-      <Navbar  />
-      <div className="row">
-        <div className="title">
-          <h3 style={{ textAlign: "center" }}>Our Blogs</h3>
-        </div>
-        <div className="col-3">
-          <div class="card img-fluid" style={{ width: 400 }}>
-            <img
-              class="card-img-top"
-              src={avatar}
-              alt="Card image"
-              style={{ width: 400 }}
-            />
-            <div class="card-img-overlay">
-              <h4 class="card-title">John Doe</h4>
-              <p class="card-text">
-                Some example text some example text. Some example text some
-                example text. Some example text some example text. Some example
-                text some example text.
-              </p>
-              <a href="#" class="btn btn-primary">
-                See Profile
-              </a>
-            </div>
+      <Head />
+      <Navbar />
+      <div>
+        <div className="container">
+          <div className="row">
+            {data.map((item) => (
+              <div className="col-md-4" key={item.id}>
+                
+                <div class="container mt-3">
+                  <h2>{item.title}</h2>
+                  <div class="card">
+                    <div class="card-body">{item.body}</div>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
-        <div className="col-3">
-          <div class="card img-fluid" style={{ width: 400 }}>
-            <img
-              class="card-img-top"
-              src={avatar}
-              alt="Card image"
-              style={{ width: 400 }}
-            />
-            <div class="card-img-overlay">
-              <h4 class="card-title">John Doe</h4>
-              <p class="card-text">
-                Some example text some example text. Some example text some
-                example text. Some example text some example text. Some example
-                text some example text.
-              </p>
-              <a href="#" class="btn btn-primary">
-                See Profile
-              </a>
-            </div>
-          </div>
-        </div>
-        <div className="col-3">
-          <div class="card img-fluid" style={{ width: 400 }}>
-            <img
-              class="card-img-top"
-              src={avatar}
-              alt="Card image"
-              style={{ width: 400 }}
-            />
-            <div class="card-img-overlay">
-              <h4 class="card-title">John Doe</h4>
-              <p class="card-text">
-                Some example text some example text. Some example text some
-                example text. Some example text some example text. Some example
-                text some example text.
-              </p>
-              <a href="#" class="btn btn-primary">
-                See Profile
-              </a>
-            </div>
-          </div>
-        </div>
-        <div className="col-3">
-          <div class="card img-fluid" style={{ width: 400 }}>
-            <img
-              class="card-img-top"
-              src={avatar}
-              alt="Card image"
-              style={{ width: 400 }}
-            />
-            <div class="card-img-overlay">
-              <h4 class="card-title">John Doe</h4>
-              <p class="card-text">
-                Some example text some example text. Some example text some
-                example text. Some example text some example text. Some example
-                text some example text.
-              </p>
-              <a href="#" class="btn btn-primary">
-                See Profile
-              </a>
-            </div>
-          </div>
-        </div>
+
+        <ul></ul>
       </div>
     </>
   );

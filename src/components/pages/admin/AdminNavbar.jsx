@@ -9,6 +9,20 @@ export const AdminNavbar = () => {
         <ul class="navbar-nav">
           <li class="nav-item">
             <Link to="/admin">Home</Link>
+            <ul className="navbar-nav">
+              <li className="nav-item">
+                <Link to="/admin/add_programs">Add Programs</Link>
+              </li>
+               <li className="nav-item">
+                <Link to="/admin/add_blogs">Add Blogs</Link>
+              </li>
+              
+            </ul>
+          </li>
+        </ul>
+        {/* <ul class="navbar-nav">
+          <li class="nav-item">
+            <Link to="/admin">Home</Link>
           </li>
           <li class="nav-item">
             <Link to="/admin/add_programs">Add Programs</Link>
@@ -25,7 +39,7 @@ export const AdminNavbar = () => {
           <li class="nav-item">
             <Link to="/admin/add_downloads">Add Downloads</Link>
           </li>
-        </ul>
+        </ul> */}
       </div>
     </nav>
   );
