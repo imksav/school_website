@@ -20,8 +20,17 @@ use App\Http\Controllers\SystemUsersController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::post('blogs', [BlogsController::class, 'addBlogs']);
+Route::post('create-blogs', [BlogsController::class, 'createBlogs']);
+Route::put('update-blogs', [BlogsController::class, 'updateBlogs']);
+Route::delete('delete-blogs', [BlogsController::class, 'deleteBlogs']);
+Route::get('display-blogs', [BlogsController::class, 'displayBlogs']);
+
+
 Route::post('register', [SystemUsersController::class, 'register']);
 Route::post('login', [SystemUsersController::class, 'login']);
+
+Route::get('testing', function(){
+    return 'This is testing';
+});
 
 
