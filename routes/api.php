@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BlogsController;
+use App\Http\Controllers\ProgramsController;
 use App\Http\Controllers\SystemUsersController;
 
 
@@ -20,15 +21,26 @@ use App\Http\Controllers\SystemUsersController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+// For Validation
+Route::post('register', [SystemUsersController::class, 'register']);
+Route::post('login', [SystemUsersController::class, 'login']);
+
+// For Blogs
 Route::post('create-blogs', [BlogsController::class, 'createBlogs']);
 Route::put('update-blogs', [BlogsController::class, 'updateBlogs']);
 Route::delete('delete-blogs', [BlogsController::class, 'deleteBlogs']);
 Route::get('display-blogs', [BlogsController::class, 'displayBlogs']);
 
+// For Programs
+Route::post('create-programs', [ProgramsController::class, 'createPrograms']);
+Route::put('update-programs', [ProgramsController::class, 'updatePrograms']);
+Route::delete('delete-programs', [ProgramsController::class, 'deletePrograms']);
+Route::get('display-programs', [ProgramsController::class, 'displayPrograms']);
 
-Route::post('register', [SystemUsersController::class, 'register']);
-Route::post('login', [SystemUsersController::class, 'login']);
 
+// For Testing
 Route::get('testing', function(){
     return 'This is testing';
 });
