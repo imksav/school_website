@@ -1,7 +1,9 @@
 import React from "react";
 import { useState } from "react";
+import AdminNavbar from "./AdminNavbar";
 
-function AddBlogs() {
+
+export default function AdminBlogs() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
@@ -13,10 +15,10 @@ function AddBlogs() {
     const formData = new FormData();
     formData.append("title", title);
     formData.append("description", description);
-    formData.append("description", image);
+    formData.append("image", image);
     formData.append("author", author);
     formData.append("author_details", author_details);
-    let result = await fetch("http://localhost:3000/api/addblogs", {
+    let result = await fetch("http://localhost:8000/api/create-blogs", {
       method: "POST",
       body: formData,
     });
@@ -24,6 +26,7 @@ function AddBlogs() {
   }
   return (
     <>
+      <AdminNavbar />
       <div className="col-sm-6 offset-sm-3">
         <h1>Add Blogs</h1>
         <input
@@ -73,4 +76,3 @@ function AddBlogs() {
     </>
   );
 }
-export default AddBlogs;

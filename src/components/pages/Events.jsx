@@ -28,8 +28,7 @@ const [data, setData] = useState([]);
         <div className="container">
           <div className="row">
             {data.map((item) => (
-              <div className="col-md-4" key={item.id}>
-                
+              <div className="col-md-4" key={item.id}>    
                 <div class="container mt-3">
                   <h2>{item.title}</h2>
                   <div class="card">

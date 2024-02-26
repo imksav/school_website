@@ -1,14 +1,12 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import AdminNavbar from "./AdminNavbar";
 
 function AdminHome() {
      return (
-          <>
-               <AdminNavbar />
-               <div>
-                    <h1>This is Admin Home page</h1>
-                    
-          </div>
+       <>
+         <AdminNavbar />
+           {/* <h1>This is home page</h1>  */}
           </>
      )
 }

@@ -1,16 +1,15 @@
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { Head } from "../common/Head";
 import Navbar from "../common/Navbar";
 import axios from "axios";
 
-
 export const Programs = ({ courses }) => {
   const [data, setData] = useState([]);
   useEffect(() => {
-    const fetchBlogs = async () => {
+    const fetchPrograms = async () => {
       try {
         const response = await axios.get(
-          "http://127.0.0.1:8000/api/display-blogs"
+          "http://127.0.0.1:8000/api/display-programs"
         );
         console.log(response);
         setData(response.data);
@@ -18,30 +17,32 @@ export const Programs = ({ courses }) => {
         console.error("Error fetching blogs:", error);
       }
     };
-    fetchBlogs();
+    fetchPrograms();
   }, [courses]);
   return (
     <>
       <Head />
       <Navbar />
+
       <div>
-        <div className="container">
-          <div className="row">
-            {data.map((item) => (
-              <div className="col-md-4" key={item.id}>
-                
-                <div class="container mt-3">
-                  <h2>{item.title}</h2>
-                  <div class="card">
-                    <div class="card-body">{item.title}</div>
-                  </div>
+        <div class="row">
+          {
+            data.map((item) => (
+            <div class="col-sm-6" >
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">{item.name}</h5>
+                  <p class="card-text">
+                   {item.description}
+                  </p>
+                  <a href="#" class="btn btn-primary">
+                    Read More
+                  </a>
                 </div>
               </div>
-            ))}
-          </div>
+            </div>
+         )) }
         </div>
-
-        <ul></ul>
       </div>
     </>
   );
