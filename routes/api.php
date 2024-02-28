@@ -29,15 +29,17 @@ Route::post('login', [SystemUsersController::class, 'login']);
 
 // For Blogs
 Route::post('create-blogs', [BlogsController::class, 'createBlogs']);
-Route::put('update-blogs', [BlogsController::class, 'updateBlogs']);
-Route::delete('delete-blogs', [BlogsController::class, 'deleteBlogs']);
+Route::put('update-blogs/{id}', [BlogsController::class, 'updateBlogs']);
+Route::delete('delete-blogs/{id}', [BlogsController::class, 'deleteBlogs']);
 Route::get('display-blogs', [BlogsController::class, 'displayBlogs']);
 
 // For Programs
 Route::post('create-programs', [ProgramsController::class, 'createPrograms']);
-Route::put('update-programs', [ProgramsController::class, 'updatePrograms']);
-Route::delete('delete-programs', [ProgramsController::class, 'deletePrograms']);
+Route::put('update-programs/{id}', [ProgramsController::class, 'updatePrograms']);
+Route::delete('delete-programs/{id}', [ProgramsController::class, 'deletePrograms']);
 Route::get('display-programs', [ProgramsController::class, 'displayPrograms']);
+Route::get('display-programs/{id}', [ProgramsController::class, 'displayProgramsById']);
+
 
 
 // For Testing

@@ -35,14 +35,19 @@ class ProgramsController extends Controller
     }
 
 
+
     function deletePrograms(Request $req){
-        $programs=Program::findorfail($req->id)->delete();
+        $programs = Program::findorfail($req->id)->delete();
         return response()->json("Program Deleted Successfully!");
     }
 
-
-    function displayPrograms(Request $req){
+    function displayProgramsById(Request $req){
+        $programs = Program::find($req->$id);
+        return response()->json('Program of {$id} displayed successfully!');
+    }
+    function displayPrograms(){
         $programs = Program::all();
         return response()->json($programs);
     }
+
 }

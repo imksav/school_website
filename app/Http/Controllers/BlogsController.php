@@ -37,6 +37,10 @@ class BlogsController extends Controller
         $blogs=Blog::findorfail($req->id)->delete();
         return response()->json("Blog Deleted Successfully!");
     }
+    function displayBlogsById(Request $req){
+        $blogs = Blog::find($req->$id);
+        return response()->json('Blog of {$id} displayed successfully!');
+    }
 
 
     function displayBlogs(Request $req){
