@@ -25,16 +25,18 @@ export const Blogs = ({ blogs }) => {
       <Navbar />
       <div>
         <h1>Blogs</h1>
-        {data.map((item)=>(
-        <div class="card" key={item.id}>
-  <img src="..." class="card-img-top" alt="..." />
-  <div class="card-body">
-    <h5 class="card-title">{item.title}</h5>
-    <p class="card-text">{item.description}</p>
-    <a href="#" class="btn btn-primary">Read More</a>
-  </div>
-</div>
-))}
+        {data.map((item) => (
+          <div class="card" key={item.id}>
+            <img src="..." class="card-img-top" alt="..." />
+            <div class="card-body">
+              <h5 class="card-title">{item.title}</h5>
+              <p class="card-text">{item.description}</p>
+              <a href="#" class="btn btn-primary">
+                Read More
+              </a>
+            </div>
+          </div>
+        ))}
         <ul></ul>
       </div>
     </>

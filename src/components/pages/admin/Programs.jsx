@@ -2,31 +2,60 @@ import { React, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import AdminNavbar from "./AdminNavbar";
 import axios from "axios";
-
+import { Link } from "react-router-dom";
 export const AdminProgram = ({ programs }) => {
-  const navigate = useNavigate();
-  const navigateToCreatePrograms = () => {
-    navigate("/admin/programs/create-programs");
-  };
-  const navigateToUpdatePrograms = () => {
-    navigate("/admin/programs/update-programs");
-  };
-  // call to api to display data
+  
+
   const [data, setData] = useState([]);
   useEffect(() => {
+    getData();
+  }, [programs]);
+
+  const navigate = useNavigate();
+  const navigateUpdate = (id) => {
+    alert(id);
+    navigate('/admin/programs/update-programs/:id');
+  }
+
+  async function updateOperation(id) {
+    let result = await fetch(
+      "http://127.0.0.1:8000/api/display-programs/" + id,
+      {
+        method: "GET",
+      }
+    );
+    result = await result.json();
+    console.warn(result);
+    alert(result);
+    // getData();
+    
+  }
+  
+  async function deleteOperation(id) {
+    let result = await fetch(
+      "http://127.0.0.1:8000/api/delete-programs/" + id,
+      {
+        method: "DELETE",
+      }
+    );
+    result = await result.json();
+    console.warn(result);
+    getData();
+  }
+
+  async function getData() {
     const fetchPrograms = async () => {
       try {
         const response = await axios.get(
           "http://127.0.0.1:8000/api/display-programs"
         );
-        console.log(response);
         setData(response.data);
       } catch (error) {
         console.error("Error fetching programs:", error);
       }
     };
     fetchPrograms();
-  }, [programs]);
+  }
   return (
     <>
       <AdminNavbar />
@@ -36,12 +65,11 @@ export const AdminProgram = ({ programs }) => {
             Programs Index
           </h1>
           <div class="flex justify-end">
-            <button
-              class="px-4 py-2 rounded-md bg-sky-500 text-sky-100 hover:bg-sky-600"
-              onClick={navigateToCreatePrograms}
-            >
-              Create Programs
-            </button>
+            <Link to="/admin/programs/create-programs">
+              <button class="px-4 py-2 rounded-md bg-primary no-underline hover:bg-amber-400 text-white">
+                Create Programs
+              </button>
+            </Link>
           </div>
         </div>
         <div class="flex flex-col">
@@ -109,71 +137,42 @@ export const AdminProgram = ({ programs }) => {
                       <td class="px-6 py-4 text-sm leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-200">
                         <p>{item.duration}</p>
                       </td>
-
-                      <td class="text-sm font-medium leading-5 text-center whitespace-no-wrap border-b border-gray-200 ">
-                        <a
-                          href="#"
-                          class="text-indigo-600 hover:text-indigo-900"
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            class="w-6 h-6"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                          >
-                            <path
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              stroke-width="2"
-                              d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
-                            />
-                          </svg>
-                        </a>
-
-                        <td class="text-sm font-medium leading-5 text-center whitespace-no-wrap border-b border-gray-200 ">
-                          <a href="#" class="text-gray-600 hover:text-gray-900">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              class="w-6 h-6"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke="currentColor"
-                            >
-                              <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                              />
-                              <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-                              />
-                            </svg>
-                          </a>
-                        </td>
-                      </td>
                       <td class="text-sm font-medium leading-5 whitespace-no-wrap border-b border-gray-200 ">
-                        <a href="#">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            class="w-6 h-6 text-red-600 hover:text-red-800"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                          >
-                            <path
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              stroke-width="2"
-                              d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                            />
-                          </svg>
-                        </a>
+                       {/* View Icon */}
+               <a href="#" class="text-gray-600 hover:text-gray-900">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                  </svg>
+                </a>
+
                       </td>
+                      {/* Edit Icon */}
+                      <td class="text-sm font-medium leading-5 text-center whitespace-no-wrap border-b border-gray-200 " >
+                        {/* <Link to="/admin/programs/update-programs/">Update</Link> */}
+                        <button onClick={()=>updateOperation(item.id)}></button>
+                        <a href="#" class="text-indigo-600 hover:text-indigo-900">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                  </svg>
+                </a>
+                
+
+                      </td>
+                      {/* Delete Icon */}
+              <td class="text-sm font-medium leading-5 whitespace-no-wrap border-b border-gray-200 " onClick={()=>deleteOperation(item.id)}> 
+                <a href="#"><svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-red-600 hover:text-red-800"
+                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                  </svg></a>
+
+                        </td>
                     </tr>
                   ))}
                 </tbody>
@@ -185,7 +184,71 @@ export const AdminProgram = ({ programs }) => {
     </>
   );
 };
+// Updating Programs Functions are here
+export function UpdatePrograms(props) {
+  const [data, setData] = useState([]);
+  console.warn("props", props.match.params.id)
+  useEffect(async () => {
+    let result = await fetch('https://localhost:8000/api/update-programs/' + props.match.params.id);
+    result = await result.json();
+    setData(result);
 
+  })
+  return (
+    <>
+      <AdminNavbar />
+      <div>
+      <div class="flex flex-col items-center min-h-screen pt-6 bg-gray-100 sm:justify-center sm:pt-0">
+        <div class="w-full px-16 py-20 mt-6 overflow-hidden bg-white rounded-lg lg:max-w-4xl">
+          <div class="mb-4">
+            <h1 class="font-serif text-3xl font-bold underline decoration-gray-400">
+              Edit Post
+            </h1>
+          </div>
+
+          <div class="w-full px-6 py-4 bg-white rounded shadow-md ring-1 ring-gray-900/10">
+            <form method="POST" action="#">
+              {/* <!-- Title --> */}
+              <div>
+                <label class="block text-sm font-bold text-gray-700" for="title">
+                  Title
+                </label>
+
+                <input
+                  class="block w-full mt-1 border-gray-300 rounded-md shadow-sm placeholder:text-gray-400 placeholder:text-right focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                  type="text" name="email" placeholder="180" value="Create Laravel project" />
+              </div>
+
+              {/* <!-- Description --> */}
+              <div class="mt-4">
+                <label class="block text-sm font-bold text-gray-700" for="password">
+                  Description
+                </label> 
+                <textarea name="description"
+                  class="block w-full mt-1 border-gray-300 rounded-md shadow-sm placeholder:text-gray-400 placeholder:text-right focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                  rows="4" placeholder="400">lorem ipsum dolor sit amet, consectet</textarea>
+              </div>
+
+              <div class="flex items-center justify-start mt-4 gap-x-2">
+                <button type="submit"
+                  class="px-6 py-2 text-sm font-semibold rounded-md shadow-md text-sky-100 bg-sky-500 hover:bg-sky-700 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300">
+                  Update
+                </button>
+                <button type="submit"
+                  class="px-6 py-2 text-sm font-semibold text-gray-100 bg-gray-400 rounded-md shadow-md hover:bg-gray-600 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300">
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    </>
+  );
+}
+
+// Adding Programs Functions are here
 export function CreatePrograms() {
   const navigate = useNavigate();
   const navigateDefault = () => {
@@ -213,6 +276,7 @@ export function CreatePrograms() {
       body: formData,
     });
     alert("Data Saved to Database!");
+    navigateDefault();
   }
   return (
     <>
@@ -221,7 +285,7 @@ export function CreatePrograms() {
         <div class="flex flex-col items-center min-h-screen pt-6 bg-gray-100 sm:justify-center sm:pt-0">
           <div class="w-full px-16 py-20 mt-6 overflow-hidden bg-white rounded-lg lg:max-w-4xl">
             <div class="mb-4">
-              <h1 class="font-serif text-3xl font-bold underline decoration-gray-400">
+              <h1 class="font-serif text-3xl font-bold text-center underline decoration-gray-400">
                 Create Programs
               </h1>
             </div>
