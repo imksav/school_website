@@ -37,8 +37,8 @@ Route::get('display-blogs', [BlogsController::class, 'displayBlogs']);
 Route::post('create-programs', [ProgramsController::class, 'createPrograms']);
 Route::put('update-programs/{id}', [ProgramsController::class, 'updatePrograms']);
 Route::delete('delete-programs/{id}', [ProgramsController::class, 'deletePrograms']);
-Route::get('display-programs', [ProgramsController::class, 'displayPrograms']);
-Route::get('display-programs/{id}', [ProgramsController::class, 'displayProgramsById']);
+Route::get('display-programs/{id?}', [ProgramsController::class, 'displayPrograms']);
+// Route::get('display-programs/{id}', [ProgramsController::class, 'displayProgramsById']);
 
 
 
