@@ -14,7 +14,7 @@ import Teams from "./components/pages/Teams.jsx";
 import Downloads from "./components/pages/Downloads.jsx";
 import AdminBlogs from "./components/pages/admin/Blogs.jsx";
 import AdminHome from "./components/pages/admin/AdminHome.jsx";
-import AdminPrograms, { CreatePrograms, UpdatePrograms} from "./components/pages/admin/Programs.jsx";
+import AdminPrograms, { CreatePrograms, EditPrograms, UpdatePrograms} from "./components/pages/admin/Programs.jsx";
 import AddTeams from "./components/pages/admin/AddTeams.jsx";
 import AddEvents from "./components/pages/admin/AddEvents.jsx";
 import AddDownloads from "./components/pages/admin/AddDownloads.jsx";
@@ -43,6 +43,7 @@ function App() {
           {/* Programs Navbar */}
           <Route path="/admin/programs/create-programs" element={<CreatePrograms />} />
           <Route path="/admin/programs/update-programs/:id" element={<UpdatePrograms />} />
+
 
           
         </Routes>
