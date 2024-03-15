@@ -6,9 +6,8 @@ const navigation = [
   { name: 'Dashboard', href: '/admin', current: false },
   { name: 'Programs', href: '/admin/programs', current: false },
   { name: 'Blogs', href: '/admin/blogs', current: false },
-  { name: 'Events', href: '/admin/events', current: false },
-  { name: 'Teams', href: '/admin/teams', current: false },
-  { name: 'Downloads', href: '/admin/downloads', current: false },
+  { name: 'Contact', href: '/admin/contact', current: false },
+
 
 ]
 

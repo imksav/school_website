@@ -1,5 +1,4 @@
 import React from "react";
-import '../pages/about.css'
 import { Head } from "../common/Head";
 import Navbar from "../common/Navbar";
 

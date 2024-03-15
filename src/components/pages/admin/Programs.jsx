@@ -70,7 +70,7 @@ export const AdminProgram = ({ programs }) => {
                       Name
                     </th>
                     <th class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
-                      Slung
+                      Slug
                     </th>
                     <th class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
                       Description
@@ -107,7 +107,7 @@ export const AdminProgram = ({ programs }) => {
                       </td>
 
                       <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                        <p>{item.slung}</p>
+                        <p>{item.slug}</p>
                       </td>
 
                       <td class="px-6 py-4 text-sm leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-200">
@@ -228,7 +228,7 @@ export function UpdatePrograms() {
   })
   const [data, setData] = useState([]);
   // const [name, setName] = useState("");
-  // const [slung, setSlung] = useState("");
+  // const [slug, setSlug] = useState("");
   // const [description, setDescription] = useState("");
   // const [level, setLevel] = useState("");
   // const [fee, setFee] = useState("");
@@ -249,13 +249,13 @@ export function UpdatePrograms() {
 
   async function updatePrograms() {
     console.log(state);
-    // console.log(name, slung, description, level, fee, duration);
-    if (!state.name || !state.slung || !state.description || !state.level || !state.fee || !state.duration) {
+    // console.log(name, slug, description, level, fee, duration);
+    if (!state.name || !state.slug || !state.description || !state.level || !state.fee || !state.duration) {
       return alert("Missing fields!!!");
     }
       const formData = new FormData();
       formData.append("name", state.name);
-      formData.append("slung", state.slung);
+      formData.append("slug", state.slug);
       formData.append("description", state.description);
       formData.append("level", state.level);
       formData.append("fee", state.fee);
@@ -307,15 +307,15 @@ export function UpdatePrograms() {
                     class="block text-sm font-bold text-gray-700"
                     for="title"
                   >
-                    Slung
+                    Slug
                   </label>
 
                   <input
                     class="block w-full mt-1 border-gray-300 rounded-md shadow-sm placeholder:text-gray-400 placeholder:text-right focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                     type="text"
-                    name="slung"
+                    name="slug"
                     placeholder="180"
-                    defaultValue={state.slung}
+                    defaultValue={state.slug}
                     onChange={handleInput}
                   />
                 </div>
@@ -434,17 +434,17 @@ export function UpdatePrograms() {
     };
     // Create Function Parameters
     const [name, setName] = useState("");
-    const [slung, setSlung] = useState("");
+    const [slug, setSlug] = useState("");
     const [description, setDescription] = useState("");
     const [level, setLevel] = useState("");
     const [fee, setFee] = useState("");
     const [duration, setDuration] = useState("");
 
     async function createPrograms() {
-      console.warn(name, slung, description, level, fee, duration);
+      console.warn(name, slug, description, level, fee, duration);
       const formData = new FormData();
       formData.append("name", name);
-      formData.append("slung", slung);
+      formData.append("slug", slug);
       formData.append("description", description);
       formData.append("level", level);
       formData.append("fee", fee);
@@ -492,15 +492,15 @@ export function UpdatePrograms() {
                     class="block text-sm font-bold text-gray-700"
                     for="title"
                   >
-                    Slung
+                    Slug
                   </label>
 
                   <input
                     class="block w-full mt-1 border-gray-300 rounded-md shadow-sm placeholder:text-gray-400 placeholder:text-right focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                     type="text"
-                    name="slung"
+                    name="slug"
                     placeholder="180"
-                    onChange={(e) => setSlung(e.target.value)}
+                    onChange={(e) => setSlug(e.target.value)}
                   />
                 </div>
 

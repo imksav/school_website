@@ -1,10 +1,11 @@
 import React from "react";
 import { useState } from "react";
-import AdminNavbar from "./AdminNavbar";
+import AdminNavbar from "../AdminNavbar";
 
 
 export default function AdminBlogs() {
   const [title, setTitle] = useState("");
+  const [slug, setSlug] = useState("");
   const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
   const [author, setAuthor] = useState("");
@@ -14,6 +15,7 @@ export default function AdminBlogs() {
     console.warn(title, description, image, author, author_details);
     const formData = new FormData();
     formData.append("title", title);
+    formData.append("slug", slug);
     formData.append("description", description);
     formData.append("image", image);
     formData.append("author", author);
@@ -38,6 +40,14 @@ export default function AdminBlogs() {
         />
         <br />
         <input
+          type="text"
+          name="slug"
+          placeholder="Slug"
+          className="form-control"
+          onChange={(e) => setSlug(e.target.value)}
+        />
+        <br />
+        <textarea
           type="text"
           name="description"
           placeholder="Description"
