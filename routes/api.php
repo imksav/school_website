@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BlogsController;
 use App\Http\Controllers\ProgramsController;
+use App\Http\Controllers\ContactsController;
 use App\Http\Controllers\SystemUsersController;
 
 
@@ -39,6 +40,11 @@ Route::put('update-programs/{id}', [ProgramsController::class, 'updatePrograms']
 Route::delete('delete-programs/{id}', [ProgramsController::class, 'deletePrograms']);
 Route::get('display-programs/{id?}', [ProgramsController::class, 'displayPrograms']);
 // Route::get('display-programs/{id}', [ProgramsController::class, 'displayProgramsById']);
+
+// For Contact
+Route::post('create-contacts', [ContactsController::class, 'createContacts']);
+Route::get('display-contacts', [ContactsController::class, 'displayContacts']);
+
 
 
 

@@ -11,6 +11,7 @@ class BlogsController extends Controller
     function createBlogs(Request $req){
         $blogs = new Blog;
         $blogs->title = $req->input('title');
+        $blogs->slug = $req->input('slug');
         $blogs->description = $req->input('description');
         $blogs->author = $req->input('author');
         $blogs->author_details = $req->input('author_details');
@@ -23,6 +24,7 @@ class BlogsController extends Controller
     function updateBlogs(Request $req){
         $blogs = Blog::findorfail($req->id);
         $blogs->title = $req->input('title');
+        $blogs->slug = $req->input('slug');
         $blogs->description = $req->input('description');
         $blogs->author = $req->input('author');
         $blogs->author_details = $req->input('author_details');

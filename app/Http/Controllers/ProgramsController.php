@@ -11,7 +11,7 @@ class ProgramsController extends Controller
     function createPrograms(Request $req){
         $programs = new Program;
         $programs->name = $req->input('name');
-        $programs->slung = $req->input('slung');
+        $programs->slug = $req->input('slug');
         $programs->description = $req->input('description');
         $programs->level = $req->input('level');
         $programs->fee = $req->input('fee');
@@ -25,7 +25,7 @@ class ProgramsController extends Controller
         echo $req->input("name");
         $programs = Program::findorfail($req->id);
         $programs->name = $req->input('name');
-        $programs->slung = $req->input('slung');
+        $programs->slug = $req->input('slug');
         $programs->description = $req->input('description');
         $programs->level = $req->input('level');
         $programs->fee = $req->input('fee');

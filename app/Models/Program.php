@@ -10,7 +10,7 @@ class Program extends Model
     protected $table = 'programs';
     protected $primaryKey = 'id';
     protected $fillable = [
-        'name', 'slung', 'description', 'level', 'fee', 'duration'
+        'name', 'slug', 'description', 'level', 'fee', 'duration'
     ];
     public $timestamps = false;
     use HasFactory;
