@@ -10,8 +10,11 @@ import Programs from "./components/pages/Programs.jsx";
 import Blogs from "./components/pages/Blog.jsx";
 import AdminBlogs from "./components/pages/admin/blogs/Blogs.jsx";
 import AdminHome from "./components/pages/admin/AdminHome.jsx";
-import AdminPrograms, { CreatePrograms, EditPrograms, UpdatePrograms} from "./components/pages/admin/Programs.jsx";
+import AdminPrograms from "./components/pages/admin/Programs.jsx";
 import AdminContact from "./components/pages/admin/AdminContact.jsx";
+import CreatePrograms from "./components/pages/admin/programs/CreatePrograms.jsx";
+import ViewPrograms from "./components/pages/admin/programs/ViewPrograms.jsx";
+import EditPrograms from "./components/pages/admin/programs/EditPrograms.jsx";
 
 function App() {
   return (
@@ -32,7 +35,10 @@ function App() {
           {/* Admin Navbar Functions */}
           {/* Programs Navbar */}
           <Route path="/admin/programs/create-programs" element={<CreatePrograms />} />
-          <Route path="/admin/programs/update-programs/:id" element={<UpdatePrograms />} />
+          <Route path="/admin/programs/display-programs/:id" element={<ViewPrograms />} />
+          <Route path="/admin/programs/update-programs/:id" element={<EditPrograms/>}></Route>
+          {/* <Route path="/admin/programs/update-programs/:id" element={<UpdatePrograms />} /> */}
+
 
 
           

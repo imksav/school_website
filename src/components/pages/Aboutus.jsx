@@ -1,11 +1,9 @@
 import React from "react";
-import { Head } from "../common/Head";
 import Navbar from "../common/Navbar";
 
 export const Aboutus = () => {
   return (
     <div>
-      <Head  />
       <Navbar  />
 
 

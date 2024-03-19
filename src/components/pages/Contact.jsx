@@ -6,7 +6,6 @@ import Navbar from "../common/Navbar";
 export const ContactForm = () => {
   return (
     <div>
-      <Head />
       <Navbar />
   
     <div>

@@ -91,7 +91,7 @@ function BasicExample() {
     <div class="navbar-collapse" id="mynavbar">
       <ul class="navbar-nav me-auto">
         <li class="nav-item">
-        <Link to="/" class="nav-link">Home</Link>
+              <Link to="/" class="nav-link">Home</Link>
         </li>
         <li class="nav-item">
                   <Link to="/about" class="nav-link">About</Link>

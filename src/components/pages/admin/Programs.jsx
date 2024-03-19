@@ -1,21 +1,17 @@
 import { React, useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import AdminNavbar from "./AdminNavbar";
 import axios from "axios";
-import { Link, useParams, NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
+import ViewPrograms from "./programs/ViewPrograms";
+
+//
 export const AdminProgram = ({ programs }) => {
   const [data, setData] = useState([]);
   useEffect(() => {
     getData();
   }, [programs]);
 
-  // const navigate = useNavigate();
-  // const navigateUpdate = (id) => {
-  //   alert(id);
-  //   // navigate("/admin/programs/update-programs/"+id);
-  // };
-
-
+  // delete operation
   async function deleteOperation(id) {
     let result = await fetch(
       "http://127.0.0.1:8000/api/delete-programs/" + id,
@@ -25,9 +21,12 @@ export const AdminProgram = ({ programs }) => {
     );
     result = await result.json();
     console.warn(result);
+
+    // immediate call to data after delete function
     getData();
   }
 
+  // load all data from api
   async function getData() {
     const fetchPrograms = async () => {
       try {
@@ -122,8 +121,12 @@ export const AdminProgram = ({ programs }) => {
                       <td class="px-6 py-4 text-sm leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-200">
                         <p>{item.duration}</p>
                       </td>
-                      <td class="text-sm font-medium leading-5 whitespace-no-wrap border-b border-gray-200 ">
+                      <td class="text-sm font-medium leading-5 whitespace-no-wrap border-b border-gray-200">
+                        <NavLink
+                          to={`/admin/programs/display-programs/${item.id}`}
+                        >
                         {/* View Icon */}
+                       <button>
                         <a href="#" class="text-gray-600 hover:text-gray-900">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -145,35 +148,37 @@ export const AdminProgram = ({ programs }) => {
                               d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
                             />
                           </svg>
-                        </a>
+                          </a>
+                          </button>
+                          </NavLink>
                       </td>
                       {/* Edit Icon */}
                       <td class="text-sm font-medium leading-5 text-center whitespace-no-wrap border-b border-gray-200 ">
-                        <NavLink to={`/admin/programs/update-programs/${item.id}`}
-          
-        >
-         <button>
-                          <a
-                            href="#"
-                            class="text-indigo-600 hover:text-indigo-900"
-                          >
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              class="w-6 h-6"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke="currentColor"
+                        <Link
+                          to={`/admin/programs/update-programs/${item.id}`}
+                        >
+                          <button>
+                            <a
+                              href="#"
+                              class="text-indigo-600 hover:text-indigo-900"
                             >
-                              <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
-                              />
-                            </svg>
-                          </a>
-                        </button>
-        </NavLink>
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="w-6 h-6"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                              >
+                                <path
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                  stroke-width="2"
+                                  d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                                />
+                              </svg>
+                            </a>
+                          </button>
+                        </Link>
                       </td>
                       {/* Delete Icon */}
                       <td
@@ -209,396 +214,179 @@ export const AdminProgram = ({ programs }) => {
   );
 };
 
-export function UpdatePrograms() {
 
-  const handleInput = (e) => {
-    setState((prev) => ({
-      ...prev,
-      [e.target.name]:e.target.value
-    }));
-    
-  }
-  const navigate = useNavigate();
-  const navigateDefault = () => {
-    navigate("/admin/programs");
-  };
-  const { id } = useParams();
-  const [state, setState] = useState({
+// // Adding Programs Functions are here
+// export function CreatePrograms() {
+//   const navigate = useNavigate();
+//   const navigateDefault = () => {
+//     navigate("/admin/programs");
+//   };
+//   // Create Function Parameters
+//   const [name, setName] = useState("");
+//   const [slug, setSlug] = useState("");
+//   const [description, setDescription] = useState("");
+//   const [level, setLevel] = useState("");
+//   const [fee, setFee] = useState("");
+//   const [duration, setDuration] = useState("");
 
-  })
-  const [data, setData] = useState([]);
-  // const [name, setName] = useState("");
-  // const [slug, setSlug] = useState("");
-  // const [description, setDescription] = useState("");
-  // const [level, setLevel] = useState("");
-  // const [fee, setFee] = useState("");
-  // const [duration, setDuration] = useState("");
-  useEffect(() => {
-    fetchPrograms();
-  }, [id])
+//   async function createPrograms() {
+//     console.warn(name, slug, description, level, fee, duration);
+//     const formData = new FormData();
+//     formData.append("name", name);
+//     formData.append("slug", slug);
+//     formData.append("description", description);
+//     formData.append("level", level);
+//     formData.append("fee", fee);
+//     formData.append("duration", duration);
+//     let result = await fetch("http://localhost:8000/api/create-programs", {
+//       method: "POST",
+//       body: formData,
+//     });
+//     console.warn("Create Post: ", result)
+//     alert("Data Saved to Database!");
+//     navigateDefault();
+//   }
+//   return (
+//     <>
+//       <AdminNavbar />
+//       <div>
+//         <div class="flex flex-col items-center min-h-screen pt-6 bg-gray-100 sm:justify-center sm:pt-0">
+//           <div class="w-full px-16 py-20 mt-6 overflow-hidden bg-white rounded-lg lg:max-w-4xl">
+//             <div class="mb-4">
+//               <h1 class="font-serif text-3xl font-bold text-center underline decoration-gray-400">
+//                 Create Programs
+//               </h1>
+//             </div>
 
-  const fetchPrograms = async () => {
-    await axios.get("http://127.0.0.1:8000/api/display-programs/"+id)
-      .then((response) => {
-        setState(response.data)
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
+//             <div class="w-full px-6 py-4 bg-white rounded shadow-md ring-1 ring-gray-900/10">
+//               {/* <!-- Title --> */}
+//               <div>
+//                 <label
+//                   class="block text-sm font-bold text-gray-700"
+//                   for="title"
+//                 >
+//                   Name
+//                 </label>
 
-  async function updatePrograms() {
-    console.log(state);
-    // console.log(name, slug, description, level, fee, duration);
-    if (!state.name || !state.slug || !state.description || !state.level || !state.fee || !state.duration) {
-      return alert("Missing fields!!!");
-    }
-      const formData = new FormData();
-      formData.append("name", state.name);
-      formData.append("slug", state.slug);
-      formData.append("description", state.description);
-      formData.append("level", state.level);
-      formData.append("fee", state.fee);
-      formData.append("duration", state.duration);
-      let result = await fetch("http://localhost:8000/api/update-programs/"+id, {
-        method: "PUT",
-        headers: {"content-type":"multipart/form-data"},
-        body: formData,
-      });
-      console.warn("Update Post: ", result)
-      alert("Data Updated to Database!");
-      navigateDefault();
-    }
-  return (
-    <>
-      <AdminNavbar />
-      <div>
-          <div class="flex flex-col items-center min-h-screen pt-6 bg-gray-100 sm:justify-center sm:pt-0">
-            <div class="w-full px-16 py-20 mt-6 overflow-hidden bg-white rounded-lg lg:max-w-4xl">
-              <div class="mb-4">
-                <h1 class="font-serif text-3xl font-bold text-center underline decoration-gray-400">
-                  Update Programs
-                </h1>
-              </div>
+//                 <input
+//                   class="block w-full mt-1 border-gray-300 rounded-md shadow-sm placeholder:text-gray-400 placeholder:text-right focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+//                   type="text"
+//                   name="name"
+//                   placeholder="180"
+//                   onChange={(e) => setName(e.target.value)}
+//                 />
+//               </div>
+//               <div>
+//                 <label
+//                   class="block text-sm font-bold text-gray-700"
+//                   for="title"
+//                 >
+//                   Slug
+//                 </label>
 
-            {data ? (
-              <div class="w-full px-6 py-4 bg-white rounded shadow-md ring-1 ring-gray-900/10">
-                {/* <!-- Title --> */}
-                <div>
-                  <label
-                    class="block text-sm font-bold text-gray-700"
-                    for="title"
-                  >
-                    Name
-                  </label>
+//                 <input
+//                   class="block w-full mt-1 border-gray-300 rounded-md shadow-sm placeholder:text-gray-400 placeholder:text-right focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+//                   type="text"
+//                   name="slug"
+//                   placeholder="180"
+//                   onChange={(e) => setSlug(e.target.value)}
+//                 />
+//               </div>
 
-                  <input
-                    class="block w-full mt-1 border-gray-300 rounded-md shadow-sm placeholder:text-gray-400 placeholder:text-right focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                    type="text"
-                    name="name"
-                    placeholder="180"
-                    defaultValue={state.name}
-                    // value={data.name}
-                    onChange={handleInput}
-                  />
-                </div>
-                <div>
-                  <label
-                    class="block text-sm font-bold text-gray-700"
-                    for="title"
-                  >
-                    Slug
-                  </label>
+//               {/* <!-- Description --> */}
+//               <div class="mt-4">
+//                 <label
+//                   class="block text-sm font-bold text-gray-700"
+//                   for="password"
+//                 >
+//                   Description
+//                 </label>
+//                 <textarea
+//                   name="description"
+//                   class="block w-full mt-1 border-gray-300 rounded-md shadow-sm placeholder:text-gray-400 placeholder:text-right focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+//                   rows="4"
+//                   placeholder="400"
+//                   onChange={(e) => setDescription(e.target.value)}
+//                 ></textarea>
+//               </div>
+//               {/* Level */}
+//               <div>
+//                 <label
+//                   class="block text-sm font-bold text-gray-700"
+//                   for="level"
+//                 >
+//                   Level
+//                 </label>
 
-                  <input
-                    class="block w-full mt-1 border-gray-300 rounded-md shadow-sm placeholder:text-gray-400 placeholder:text-right focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                    type="text"
-                    name="slug"
-                    placeholder="180"
-                    defaultValue={state.slug}
-                    onChange={handleInput}
-                  />
-                </div>
+//                 <select
+//                   class="block w-full mt-1 border-gray-300 rounded-md shadow-sm placeholder:text-gray-400 placeholder:text-right focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+//                   type="text"
+//                   name="email"
+//                   placeholder="180"
+//                   onChange={(e) => setLevel(e.target.value)}
+//                 >
+//                   <option selected>Choose Level</option>
+//                   <option value="PreSchool">Pre School</option>
+//                   <option value="Primary">Primary</option>
+//                   <option value="Secondary">Secondary</option>
+//                   <option value="+2">+2</option>
+//                   <option value="Bachelor">Bachelor</option>
+//                   <option value="Master">Master</option>
+//                   <option value="PHD">PHD</option>
+//                 </select>
+//               </div>
+//               <div>
+//                 <label class="block text-sm font-bold text-gray-700" for="fee">
+//                   Fee
+//                 </label>
 
-                {/* <!-- Description --> */}
-                <div class="mt-4">
-                  <label
-                    class="block text-sm font-bold text-gray-700"
-                    for="password"
-                  >
-                    Description
-                  </label>
-                  <textarea
-                    name="description"
-                    class="block w-full mt-1 border-gray-300 rounded-md shadow-sm placeholder:text-gray-400 placeholder:text-right focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                    rows="4"
-                    placeholder="400"
-                    defaultValue={state.description}
-                    onChange={handleInput}
-                  ></textarea>
-                </div>
-                {/* Level */}
-                <div>
-                  <label
-                    class="block text-sm font-bold text-gray-700"
-                    for="level"
-                  >
-                    Level
-                  </label>
+//                 <input
+//                   class="block w-full mt-1 border-gray-300 rounded-md shadow-sm placeholder:text-gray-400 placeholder:text-right focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+//                   type="text"
+//                   name="fee"
+//                   placeholder="180"
+//                   onChange={(e) => setFee(e.target.value)}
+//                 />
+//               </div>
+//               <div>
+//                 <label
+//                   class="block text-sm font-bold text-gray-700"
+//                   for="duration"
+//                 >
+//                   Duration
+//                 </label>
 
-                  <select
-                    class="block w-full mt-1 border-gray-300 rounded-md shadow-sm placeholder:text-gray-400 placeholder:text-right focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                    type="text"
-                    name="level"
-                    placeholder="180"
-                    defaultValue={state.level}
-                    onChange={handleInput}
-                  >
-                    <option selected>Select Option</option>
-                    <option value="PreSchool">Pre School</option>
-                    <option value="Primary">Primary</option>
-                    <option value="Secondary">Secondary</option>
-                    <option value="+2">+2</option>
-                    <option value="Bachelor">Bachelor</option>
-                    <option value="Master">Master</option>
-                    <option value="PHD">PHD</option>
-                  </select>
-                </div>
-                <div>
-                  <label class="block text-sm font-bold text-gray-700" for="fee">
-                    Fee
-                  </label>
+//                 <input
+//                   class="block w-full mt-1 border-gray-300 rounded-md shadow-sm placeholder:text-gray-400 placeholder:text-right focus:border-red-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+//                   type="text"
+//                   name="duration"
+//                   placeholder="180"
+//                   onChange={(e) => setDuration(e.target.value)}
+//                 />
+//               </div>
+//               {/* Button */}
+//               <div class="flex items-center justify-start mt-4 gap-x-2">
+//                 <button
+//                   type="submit"
+//                   class="px-6 py-2 text-sm font-semibold rounded-md shadow-md text-sky-100 bg-sky-500 hover:bg-sky-700 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300"
+//                   onClick={createPrograms}
+//                 >
+//                   Save
+//                 </button>
+//                 <button
+//                   type="submit"
+//                   class="px-6 py-2 text-sm font-semibold text-gray-100 bg-gray-400 rounded-md shadow-md hover:bg-gray-600 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300"
+//                   onClick={navigateDefault}
+//                 >
+//                   Cancel
+//                 </button>
+//               </div>
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+//     </>
+//   );
+// }
 
-                  <input
-                    class="block w-full mt-1 border-gray-300 rounded-md shadow-sm placeholder:text-gray-400 placeholder:text-right focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                    type="text"
-                    name="fee"
-                    placeholder="180"
-                    defaultValue={state.fee}
-                    onChange={handleInput}
-                  />
-                </div>
-                <div>
-                  <label
-                    class="block text-sm font-bold text-gray-700"
-                    for="duration"
-                  >
-                    Duration
-                  </label>
-
-                  <input
-                    class="block w-full mt-1 border-gray-300 rounded-md shadow-sm placeholder:text-gray-400 placeholder:text-right focus:border-red-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                    type="text"
-                    name="duration"
-                    placeholder="180"
-                    defaultValue={state.duration}
-                    onChange={handleInput}
-                  />
-                </div>
-                {/* Button */}
-                <div class="flex items-center justify-start mt-4 gap-x-2">
-                  <button
-                    type="submit"
-                    class="px-6 py-2 text-sm font-semibold rounded-md shadow-md text-sky-100 bg-sky-500 hover:bg-sky-700 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300"
-                    onClick={updatePrograms}
-                  >
-                    Save
-                  </button>
-                  <button
-                    type="submit"
-                    class="px-6 py-2 text-sm font-semibold text-gray-100 bg-gray-400 rounded-md shadow-md hover:bg-gray-600 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300"
-                  onClick={navigateDefault}
-                  >
-                    Cancel
-                  </button>
-                </div>
-              </div>
-            ) : (<p>Loading...</p>)}
-            </div>
-      </div>
-                
-        </div>
-       <div>
-      
-    </div>
-                    
-    </>
-  )
-}
-
-  // Adding Programs Functions are here
-  export function CreatePrograms() {
-    const navigate = useNavigate();
-    const navigateDefault = () => {
-      navigate("/admin/programs");
-    };
-    // Create Function Parameters
-    const [name, setName] = useState("");
-    const [slug, setSlug] = useState("");
-    const [description, setDescription] = useState("");
-    const [level, setLevel] = useState("");
-    const [fee, setFee] = useState("");
-    const [duration, setDuration] = useState("");
-
-    async function createPrograms() {
-      console.warn(name, slug, description, level, fee, duration);
-      const formData = new FormData();
-      formData.append("name", name);
-      formData.append("slug", slug);
-      formData.append("description", description);
-      formData.append("level", level);
-      formData.append("fee", fee);
-      formData.append("duration", duration);
-      let result = await fetch("http://localhost:8000/api/create-programs", {
-        method: "POST",
-        body: formData,
-      });
-      console.warn("Create Post: ", result)
-      alert("Data Saved to Database!");
-      navigateDefault();
-    }
-    return (
-      <>
-        <AdminNavbar />
-        <div>
-          <div class="flex flex-col items-center min-h-screen pt-6 bg-gray-100 sm:justify-center sm:pt-0">
-            <div class="w-full px-16 py-20 mt-6 overflow-hidden bg-white rounded-lg lg:max-w-4xl">
-              <div class="mb-4">
-                <h1 class="font-serif text-3xl font-bold text-center underline decoration-gray-400">
-                  Create Programs
-                </h1>
-              </div>
-
-              <div class="w-full px-6 py-4 bg-white rounded shadow-md ring-1 ring-gray-900/10">
-                {/* <!-- Title --> */}
-                <div>
-                  <label
-                    class="block text-sm font-bold text-gray-700"
-                    for="title"
-                  >
-                    Name
-                  </label>
-
-                  <input
-                    class="block w-full mt-1 border-gray-300 rounded-md shadow-sm placeholder:text-gray-400 placeholder:text-right focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                    type="text"
-                    name="name"
-                    placeholder="180"
-                    onChange={(e) => setName(e.target.value)}
-                  />
-                </div>
-                <div>
-                  <label
-                    class="block text-sm font-bold text-gray-700"
-                    for="title"
-                  >
-                    Slug
-                  </label>
-
-                  <input
-                    class="block w-full mt-1 border-gray-300 rounded-md shadow-sm placeholder:text-gray-400 placeholder:text-right focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                    type="text"
-                    name="slug"
-                    placeholder="180"
-                    onChange={(e) => setSlug(e.target.value)}
-                  />
-                </div>
-
-                {/* <!-- Description --> */}
-                <div class="mt-4">
-                  <label
-                    class="block text-sm font-bold text-gray-700"
-                    for="password"
-                  >
-                    Description
-                  </label>
-                  <textarea
-                    name="description"
-                    class="block w-full mt-1 border-gray-300 rounded-md shadow-sm placeholder:text-gray-400 placeholder:text-right focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                    rows="4"
-                    placeholder="400"
-                    onChange={(e) => setDescription(e.target.value)}
-                  ></textarea>
-                </div>
-                {/* Level */}
-                <div>
-                  <label
-                    class="block text-sm font-bold text-gray-700"
-                    for="level"
-                  >
-                    Level
-                  </label>
-
-                  <select
-                    class="block w-full mt-1 border-gray-300 rounded-md shadow-sm placeholder:text-gray-400 placeholder:text-right focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                    type="text"
-                    name="email"
-                    placeholder="180"
-                    onChange={(e) => setLevel(e.target.value)}
-                  >
-                    <option selected>Choose Level</option>
-                    <option value="PreSchool">Pre School</option>
-                    <option value="Primary">Primary</option>
-                    <option value="Secondary">Secondary</option>
-                    <option value="+2">+2</option>
-                    <option value="Bachelor">Bachelor</option>
-                    <option value="Master">Master</option>
-                    <option value="PHD">PHD</option>
-                  </select>
-                </div>
-                <div>
-                  <label class="block text-sm font-bold text-gray-700" for="fee">
-                    Fee
-                  </label>
-
-                  <input
-                    class="block w-full mt-1 border-gray-300 rounded-md shadow-sm placeholder:text-gray-400 placeholder:text-right focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                    type="text"
-                    name="fee"
-                    placeholder="180"
-                    onChange={(e) => setFee(e.target.value)}
-                  />
-                </div>
-                <div>
-                  <label
-                    class="block text-sm font-bold text-gray-700"
-                    for="duration"
-                  >
-                    Duration
-                  </label>
-
-                  <input
-                    class="block w-full mt-1 border-gray-300 rounded-md shadow-sm placeholder:text-gray-400 placeholder:text-right focus:border-red-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                    type="text"
-                    name="duration"
-                    placeholder="180"
-                    onChange={(e) => setDuration(e.target.value)}
-                  />
-                </div>
-                {/* Button */}
-                <div class="flex items-center justify-start mt-4 gap-x-2">
-                  <button
-                    type="submit"
-                    class="px-6 py-2 text-sm font-semibold rounded-md shadow-md text-sky-100 bg-sky-500 hover:bg-sky-700 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300"
-                    onClick={createPrograms}
-                  >
-                    Save
-                  </button>
-                  <button
-                    type="submit"
-                    class="px-6 py-2 text-sm font-semibold text-gray-100 bg-gray-400 rounded-md shadow-md hover:bg-gray-600 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300"
-                    onClick={navigateDefault}
-                  >
-                    Cancel
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </>
-    );
-  }
-
-
-  export default AdminProgram
+export default AdminProgram;
