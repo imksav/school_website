@@ -1,13 +1,41 @@
-import React from "react";
+import {React, useState} from "react";
+import { useNavigate } from "react-router-dom";
+
 import arrow from "../../assets/Blue Right Arrow.png";
-import { Head } from "../common/Head";
+// import { Head } from "../common/Head";
 import Navbar from "../common/Navbar";
 
 export const ContactForm = () => {
+   const navigate = useNavigate();
+     const navigateDefault = () => {
+          navigate("/");
+     };
+     // Create Function Parameters
+     const [fullname, setFullname] = useState("");
+     const [email, setEmail] = useState("");
+     const [phone, setPhone] = useState("");
+     const [subject, setSubject] = useState("");
+     const [message, setMessage] = useState("");
+
+     async function submitContacts() {
+          console.warn(fullname, email, phone, subject, message);
+          const formData = new FormData();
+          formData.append("fullname", fullname);
+          formData.append("email", email);
+          formData.append("phone", phone);
+          formData.append("subject", subject);
+          formData.append("message", message);
+          let result = await fetch("http://localhost:8000/api/create-contacts", {
+               method: "POST",
+               body: formData,
+          });
+          console.warn("Create Contacts: ", result)
+          alert("Data Saved to Database!");
+          navigateDefault();
+     }
   return (
     <div>
       <Navbar />
-  
     <div>
       <div class="w-full">
         <section>
@@ -30,7 +58,8 @@ export const ContactForm = () => {
                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 id="fullname"
                 type="text"
-                placeholder="Fullname"
+                  placeholder="Fullname"
+                   onChange={(e) => setFullname(e.target.value)}
               />
             </div>
             <div class="mb-6">
@@ -45,7 +74,8 @@ export const ContactForm = () => {
                 class="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                 id="email"
                 type="email"
-                placeholder="Your email address"
+                  placeholder="Your email address"
+                   onChange={(e) => setEmail(e.target.value)}
               />
             </div>
             <div class="mb-6">
@@ -60,7 +90,8 @@ export const ContactForm = () => {
                 class="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                 id="conatctnumber"
                 type="phone"
-                placeholder="Contact Number"
+                  placeholder="Contact Number"
+                   onChange={(e) => setPhone(e.target.value)}
               />
             </div>
             <div class="mb-6">
@@ -75,7 +106,8 @@ export const ContactForm = () => {
                 class="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                 id="subject"
                 type="text"
-                placeholder="Subject"
+                  placeholder="Subject"
+                   onChange={(e) => setSubject(e.target.value)}
               />
             </div>
             <div class="mb-6">
@@ -92,13 +124,15 @@ export const ContactForm = () => {
                 type="text"
                 placeholder="Your message"
                 cols={3}
-                rows={5}
+                  rows={5}
+                   onChange={(e) => setMessage(e.target.value)}
               />
             </div>
             <div class="flex items-center justify-center">
               <button
                 class="bg-green-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                type="button"
+                  type="button"
+                  onClick={submitContacts}
               >
                 Send Message
               </button>

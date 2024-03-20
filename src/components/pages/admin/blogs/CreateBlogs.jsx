@@ -1,79 +1,50 @@
-import {React, useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
+import { React, useState} from "react";
+import { useNavigate } from "react-router-dom";
 import AdminNavbar from "../AdminNavbar";
 
-export function UpdatePrograms() {
 
-  const handleInput = (e) => {
-    setState((prev) => ({
-      ...prev,
-      [e.target.name]:e.target.value
-    }));
-    
-  }
-  const navigate = useNavigate();
-  const navigateDefault = () => {
-    navigate("/admin/programs");
-  };
-  const { id } = useParams();
-  const [state, setState] = useState({});
-  const [data, setData] = useState([]);
-  // const [name, setName] = useState("");
-  // const [slug, setSlug] = useState("");
-  // const [description, setDescription] = useState("");
-  // const [level, setLevel] = useState("");
-  // const [fee, setFee] = useState("");
-  // const [duration, setDuration] = useState("");
-  useEffect(() => {
-    fetchPrograms();
-  }, [id])
+export function CreateBlogs() {
+    const navigate = useNavigate();
+    const navigateDefault = () => {
+      navigate("/admin/blogs");
+    };
+    // Create Function Parameters
+    const [title, setTitle] = useState("");
+    const [slug, setSlug] = useState("");
+    const [description, setDescription] = useState("");
+    const [image, setImage] = useState("");
+    const [author, setAuthor] = useState("");
+    const [author_details, setAuthorDetails] = useState("");
 
-  const fetchPrograms = async () => {
-    await axios.get("http://127.0.0.1:8000/api/display-programs/"+id)
-      .then((response) => {
-        setState(response.data)
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
-
-  async function updatePrograms() {
-    console.log(state);
-    // console.log(name, slug, description, level, fee, duration);
-    if (!state.name || !state.slug || !state.description || !state.level || !state.fee || !state.duration) {
-      return alert("Missing fields!!!");
-    }
+    async function createBlogs() {
+      console.warn(title, slug, description, image, author, author_details);
       const formData = new FormData();
-      formData.append("name", state.name);
-      formData.append("slug", state.slug);
-      formData.append("description", state.description);
-      formData.append("level", state.level);
-      formData.append("fee", state.fee);
-      formData.append("duration", state.duration);
-      let result = await fetch("http://localhost:8000/api/update-programs/"+id, {
-        method: "PUT",
-        headers: {"content-type":"multipart/form-data"},
+      formData.append("title", title);
+      formData.append("slug", slug);
+      formData.append("description", description);
+      formData.append("image", image);
+      formData.append("author", author);
+      formData.append("author_details", author_details);
+      let result = await fetch("http://localhost:8000/api/create-blogs", {
+        method: "POST",
         body: formData,
       });
-      console.warn("Update Post: ", result)
-      alert("Data Updated to Database!");
+      console.warn("Create Post: ", result)
+      alert("Data Saved to Database!");
       navigateDefault();
     }
-  return (
-    <>
-      <AdminNavbar />
-      <div>
+    return (
+      <>
+        <AdminNavbar />
+        <div>
           <div class="flex flex-col items-center min-h-screen pt-6 bg-gray-100 sm:justify-center sm:pt-0">
             <div class="w-full px-16 py-20 mt-6 overflow-hidden bg-white rounded-lg lg:max-w-4xl">
               <div class="mb-4">
                 <h1 class="font-serif text-3xl font-bold text-center underline decoration-gray-400">
-                  Update Programs
+                  Create Blogs
                 </h1>
               </div>
 
-            {data ? (
               <div class="w-full px-6 py-4 bg-white rounded shadow-md ring-1 ring-gray-900/10">
                 {/* <!-- Title --> */}
                 <div>
@@ -81,17 +52,15 @@ export function UpdatePrograms() {
                     class="block text-sm font-bold text-gray-700"
                     for="title"
                   >
-                    Name
+                    Title
                   </label>
 
                   <input
                     class="block w-full mt-1 border-gray-300 rounded-md shadow-sm placeholder:text-gray-400 placeholder:text-right focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                     type="text"
-                    name="name"
+                    name="title"
                     placeholder="180"
-                    defaultValue={state.name}
-                    // value={data.name}
-                    onChange={handleInput}
+                    onChange={(e) => setTitle(e.target.value)}
                   />
                 </div>
                 <div>
@@ -107,8 +76,7 @@ export function UpdatePrograms() {
                     type="text"
                     name="slug"
                     placeholder="180"
-                    defaultValue={state.slug}
-                    onChange={handleInput}
+                    onChange={(e) => setSlug(e.target.value)}
                   />
                 </div>
 
@@ -125,66 +93,54 @@ export function UpdatePrograms() {
                     class="block w-full mt-1 border-gray-300 rounded-md shadow-sm placeholder:text-gray-400 placeholder:text-right focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                     rows="4"
                     placeholder="400"
-                    defaultValue={state.description}
-                    onChange={handleInput}
+                    onChange={(e) => setDescription(e.target.value)}
                   ></textarea>
                 </div>
                 {/* Level */}
                 <div>
                   <label
                     class="block text-sm font-bold text-gray-700"
-                    for="level"
+                    for="image"
                   >
-                    Level
+                    Image
                   </label>
 
-                  <select
+                  <input
                     class="block w-full mt-1 border-gray-300 rounded-md shadow-sm placeholder:text-gray-400 placeholder:text-right focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                    type="text"
-                    name="level"
+                    type="file"
+                    name="image"
                     placeholder="180"
-                    defaultValue={state.level}
-                    onChange={handleInput}
+                    onChange={(e) => setImage(e.target.files[0])}
                   >
-                    <option selected>Select Option</option>
-                    <option value="PreSchool">Pre School</option>
-                    <option value="Primary">Primary</option>
-                    <option value="Secondary">Secondary</option>
-                    <option value="+2">+2</option>
-                    <option value="Bachelor">Bachelor</option>
-                    <option value="Master">Master</option>
-                    <option value="PHD">PHD</option>
-                  </select>
+                  </input>
                 </div>
                 <div>
-                  <label class="block text-sm font-bold text-gray-700" for="fee">
-                    Fee
+                  <label class="block text-sm font-bold text-gray-700" for="author">
+                    Author
                   </label>
 
                   <input
                     class="block w-full mt-1 border-gray-300 rounded-md shadow-sm placeholder:text-gray-400 placeholder:text-right focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                     type="text"
-                    name="fee"
+                    name="author"
                     placeholder="180"
-                    defaultValue={state.fee}
-                    onChange={handleInput}
+                    onChange={(e) => setAuthor(e.target.value)}
                   />
                 </div>
                 <div>
                   <label
                     class="block text-sm font-bold text-gray-700"
-                    for="duration"
+                    for="author_details"
                   >
-                    Duration
+                    Author Details
                   </label>
 
                   <input
                     class="block w-full mt-1 border-gray-300 rounded-md shadow-sm placeholder:text-gray-400 placeholder:text-right focus:border-red-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                     type="text"
-                    name="duration"
+                    name="author_details"
                     placeholder="180"
-                    defaultValue={state.duration}
-                    onChange={handleInput}
+                    onChange={(e) => setAuthorDetails(e.target.value)}
                   />
                 </div>
                 {/* Button */}
@@ -192,28 +148,24 @@ export function UpdatePrograms() {
                   <button
                     type="submit"
                     class="px-6 py-2 text-sm font-semibold rounded-md shadow-md text-sky-100 bg-sky-500 hover:bg-sky-700 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300"
-                    onClick={updatePrograms}
+                    onClick={createBlogs}
                   >
                     Save
                   </button>
                   <button
                     type="submit"
                     class="px-6 py-2 text-sm font-semibold text-gray-100 bg-gray-400 rounded-md shadow-md hover:bg-gray-600 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300"
-                  onClick={navigateDefault}
+                    onClick={navigateDefault}
                   >
                     Cancel
                   </button>
                 </div>
               </div>
-            ) : (<p>Loading...</p>)}
             </div>
-      </div>
-                
+          </div>
         </div>
-       <div>
-      
-    </div>
-                    
-    </>
-  )
+      </>
+    );
 }
+  
+export default CreateBlogs;
